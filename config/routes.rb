@@ -1,6 +1,9 @@
 SampleApp::Application.routes.draw do
-  get "users/new"
 
+  # this line tells rails to respond to all RESTful APIs for users (post, get, put, delete, etc)
+  resources :users
+
+  # these lines map individual uri requests to views (in this case, static pages)
   match '/signup', to: 'users#new'
 
   match '/help', to: 'static_pages#help'
@@ -9,6 +12,7 @@ SampleApp::Application.routes.draw do
 
   match '/contact', to: 'static_pages#contact'
 
+  # this line redirects all calls to the root uri to the home page
   root to: 'static_pages#home'
 
   # The priority is based upon order of creation:
