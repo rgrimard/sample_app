@@ -1,9 +1,14 @@
 SampleApp::Application.routes.draw do
 
   # this line tells rails to respond to all RESTful APIs for users (post, get, put, delete, etc)
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 
   # these lines map individual uri requests to views (in this case, static pages)
   match '/signup', to: 'users#new'
