@@ -26,8 +26,6 @@ class User < ActiveRecord::Base
            dependent:   :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
 
-
-
   before_save :create_remember_token
 
   validates :name, presence: true, length: { maximum: 50 }
@@ -36,8 +34,7 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 6}
 
   def feed
-    # This is preliminary. See "Following users" for the full implementation.
-    Micropost.where("user_id = ?", id)
+    Micropost.from_users_followed_by(self)
   end
 
   def following?(other_user)
